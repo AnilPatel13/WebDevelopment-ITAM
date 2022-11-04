@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Request Assets - ITAM Admin</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}"/>
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="{{ url_for('home_page') }}">ITAM</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{{ url_for('login') }}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+               <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="{{ url_for('home_page') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Asset Management</div>
+							<a class="nav-link" href="{{ url_for('add_asset') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                Add Asset
+                            </a>
+                            <a class="nav-link" href="{{ url_for('request_asset') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tag"></i></div>
+                                Request an Asset
+                            </a>
+                            <a class="nav-link" href="{{ url_for('asset_retirement') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-trash-can"></i></div>
+                                Asset Retirement
+                            </a>
+                            <a class="nav-link" href="{{ url_for('asset_tracking') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-hourglass-half"></i></div>
+                                Track an Asset
+                            </a>
+                           <div class="sb-sidenav-menu-heading">Service</div>
+                            <a class="nav-link" href="{{ url_for('stockroom') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Stockroom Mgmt
+                            </a>
+							<a class="nav-link" href="{{ url_for('requests_fulfillment') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-cart-plus"></i></div>
+                                Request Fulfillment
+                            </a>
+                            <a class="nav-link" href="{{ url_for('support') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-headset"></i></div>
+                                Support
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Admin
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Request Assets</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="{{ url_for('home_page') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Request Asset</li>
+                        </ol>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p class="mb-0">
+                                    Submit an Request for Asset
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                           <div class="card-body">
+                                        <form>
+                                            <div class="mb-3">
+
+
+                                                <div class="col-md-4">
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="employeename" type="text" placeholder="Employee Name" />
+                                                        <label for="employeename">Employee Name</label>
+                                                    </div>
+                                                </div>
+
+                                                 <div class="col-md-4">
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="employeeid" type="text" placeholder="Employee Id" />
+                                                        <label for="employeeid">Employee Id</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select" id="assetpriority" type="text" placeholder="Select Priority" />
+                                                          <option value="high">High</option>
+                                                          <option value="medium">Medium</option>
+                                                          <option value="low">Low</option>
+                                                        </select>
+                                                        <label for="assetpriority">Select Priority</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select" id="assetmodel" type="text" placeholder="Select Model" />
+                                                          <option value="RTX-2070">RTX-2070</option>
+                                                          <option value="RTX-3090">RTX-3090</option>
+                                                          <option value="RTX-3080">RTX-3080</option>
+                                                        </select>
+                                                        <label for="assetmodel">Select Model</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="assetunit" type="text" placeholder="No of Units Required" />
+                                                        <label for="assetunit">No of Units Required</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                        <input class="form-check-input" id="acceptassetterms" type="checkbox" value="" />
+                                                        <label class="form-check-label" for="acceptassetterms">I Accept Terms and Condition</label>
+                                                    <div class="form-floating mb-3"></div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="d-grid"><a class="btn btn-primary btn-block" href="{{ url_for('add_asset') }}">Add</a></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                           </div>
+                        </div>
+                     </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Justsst Designs 2022</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="{{url_for('static',filename='js/scripts.js')}}"></script>
+    </body>
+</html>

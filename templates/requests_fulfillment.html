@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Request Fulfillment - ITAM Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}"/>
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="{{ url_for('home_page') }}">ITAM</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                   aria-describedby="btnNavbarSearch"/>
+            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#!">Settings</a></li>
+                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                <li>
+                    <hr class="dropdown-divider"/>
+                </li>
+                <li><a class="dropdown-item" href="{{ url_for('login') }}">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Core</div>
+                    <a class="nav-link" href="{{ url_for('home_page') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Dashboard
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Asset Management</div>
+                    <a class="nav-link" href="{{ url_for('add_asset') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                        Add Asset
+                    </a>
+                    <a class="nav-link" href="{{ url_for('request_asset') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tag"></i></div>
+                        Request an Asset
+                    </a>
+                    <a class="nav-link" href="{{ url_for('asset_retirement') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-trash-can"></i></div>
+                        Asset Retirement
+                    </a>
+                    <a class="nav-link" href="{{ url_for('asset_tracking') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-hourglass-half"></i></div>
+                        Track an Asset
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Service</div>
+                    <a class="nav-link" href="{{ url_for('stockroom') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Stockroom Mgmt
+                    </a>
+                    <a class="nav-link" href="{{ url_for('requests_fulfillment') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-cart-plus"></i></div>
+                        Request Fulfillment
+                    </a>
+                    <a class="nav-link" href="{{ url_for('support') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-headset"></i></div>
+                        Support
+                    </a>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                Admin
+            </div>
+        </nav>
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Request Fulfillment</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="{{ url_for('home_page') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Request Fulfillment</li>
+                </ol>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p class="mb-0">
+                            IT Support request fulfillment Page.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        DataTable for Support/Asset Request Ticket.
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Ticket No</th>
+                                <th>Employee Name</th>
+                                <th>Employee Id</th>
+                                <th>Priority</th>
+                                <th>Asset Model</th>
+                                <th>No Of Unit Request</th>
+                                <th>Service Request Type</th>
+                                <th>Support Service</th>
+                                <th>Additional Comment</th>
+                                <th>Status</th>
+                                <th>Creation Date</th>
+                                <th>Support Ticket URL</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Ticket No</th>
+                                <th>Employee Name</th>
+                                <th>Employee Id</th>
+                                <th>Priority</th>
+                                <th>Asset Model</th>
+                                <th>No Of Unit Request</th>
+                                <th>Service Request Type</th>
+                                <th>Support Service</th>
+                                <th>Additional Comment</th>
+                                <th>Status</th>
+                                <th>Creation Date</th>
+                                <th>Support Ticket URL</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr>
+                                <td>1111</td>
+                                <td>Anilkumar</td>
+                                <td>101</td>
+                                <td>High</td>
+                                <td>RTX-3090</td>
+                                <td>1</td>
+                                <td>Asset request</td>
+                                <td></td>
+                                <td>I need Nvidia GPU of 3rd Generation</td>
+                                <td>Pending</td>
+                                <td>11/01/2022</td>
+                                <td><a href="{{ url_for('requests_fulfillment_process') }}" onclick="show()">Link</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>1112</td>
+                                <td>Rishi</td>
+                                <td>102</td>
+                                <td>High</td>
+                                <td>Dell - E7440</td>
+                                <td>1</td>
+                                <td>Asset request</td>
+                                <td></td>
+                                <td></td>
+                                <td>Pending</td>
+                                <td>11/01/2022</td>
+                                <td><a href="{{ url_for('requests_fulfillment_process') }}" onclick="show()">Link</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>1113</td>
+                                <td>Mani</td>
+                                <td>103</td>
+                                <td>Low</td>
+                                <td></td>
+                                <td></td>
+                                <td>Support request</td>
+                                <td>Install Software</td>
+                                <td>Need help to install docker on Apple M1 Chipset</td>
+                                <td>Pending</td>
+                                <td>11/01/2022</td>
+                                <td><a href="{{ url_for('requests_fulfillment_process') }}" onclick="show()">Link</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>1114</td>
+                                <td>Amir</td>
+                                <td>104</td>
+                                <td>Medium</td>
+                                <td></td>
+                                <td></td>
+                                <td>Support request</td>
+                                <td>Add Ram</td>
+                                <td>Please Increase the Ram because system is hanging when i open multiple
+                                    application.
+                                </td>
+                                <td>Done</td>
+                                <td>10/29/2022</td>
+                                <td><a href="{{ url_for('requests_fulfillment_process') }}" onclick="show()">Link</a>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Justsst Designs 2022</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="{{url_for('static',filename='js/datarender.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/scripts.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/datatables-simple-demo.js')}}"></script>
+</body>
+</html>
