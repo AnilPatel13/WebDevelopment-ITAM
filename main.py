@@ -169,8 +169,7 @@ def authentication():
         else:
             session['2fa'] = True
             return redirect(url_for('home_page'))
-    elif request.method == "GET" and 'loggedin' in session and '2fa' in session and \
-            (session['role'] in ['view', 'admin'] and session['status'] in ['approved', 'pending', 'reject']):
+    elif request.method == "GET" and 'loggedin' in session and '2fa' in session:
         return redirect(url_for('home_page'))
     elif request.method == "GET":
         return redirect(url_for('logout'))
