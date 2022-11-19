@@ -28,50 +28,50 @@ class MysqlClient():
     __autocommit = None
 
 
-    def __init__(self):
-        pass
-
-    def connect(self):
-        try:
-            instance_connection_name = os.environ["INSTANCE_CONNECTION_NAME"]  # e.g. 'project:region:instance'
-            db_user = os.environ.get("DB_USER", "")  # e.g. 'my-db-user'
-            db_pass = os.environ["DB_PASS"]  # e.g. 'my-db-password'
-            db_name = os.environ["DB_NAME"]  # e.g. 'my-database'
-            ip_type = IPTypes.PRIVATE if os.environ.get("PRIVATE_IP") else IPTypes.PUBLIC
-            connector = Connector(ip_type)
-            conn = connector.connect(
-                instance_connection_name,
-                "pymysql",
-                user=db_user,
-                password=db_pass,
-                db=db_name,
-                autocommit=True,
-            cursorclass = pymysql.cursors.DictCursor,
-            charset = "utf8mb4"
-
-            )
-            return conn
-        except Exception as e:
-            logging.error("Failed to Connect Mysql Database | host = %S", self.__host, exc_info=1)
-            raise DatabaseException("Failed to Connect Mysql Database")
-
     # def __init__(self):
-    #     self.__host = DATABASE.HOST
-    #     self.__user = DATABASE.USERNAME
-    #     self.__password = DATABASE.PASSWORD
-    #     self.__db = DATABASE.DATABASE
-    #     self.__port = DATABASE.PORT
-    #     self.__charset = DATABASE.CHARSET
-    #     self.__autocommit = DATABASE.AUTOCOMMIT
-    #
+    #     pass
+
     # def connect(self):
     #     try:
-    #         return pymysql.connect(host=self.__host, user=self.__user, passwd=self.__password,
-    #                                db=self.__db, port=int(self.__port), charset=self.__charset,
-    #                                autocommit=self.__autocommit, cursorclass=pymysql.cursors.DictCursor)
+    #         instance_connection_name = os.environ["INSTANCE_CONNECTION_NAME"]  # e.g. 'project:region:instance'
+    #         db_user = os.environ.get("DB_USER", "")  # e.g. 'my-db-user'
+    #         db_pass = os.environ["DB_PASS"]  # e.g. 'my-db-password'
+    #         db_name = os.environ["DB_NAME"]  # e.g. 'my-database'
+    #         ip_type = IPTypes.PRIVATE if os.environ.get("PRIVATE_IP") else IPTypes.PUBLIC
+    #         connector = Connector(ip_type)
+    #         conn = connector.connect(
+    #             instance_connection_name,
+    #             "pymysql",
+    #             user=db_user,
+    #             password=db_pass,
+    #             db=db_name,
+    #             autocommit=True,
+    #         cursorclass = pymysql.cursors.DictCursor,
+    #         charset = "utf8mb4"
+    #
+    #         )
+    #         return conn
     #     except Exception as e:
     #         logging.error("Failed to Connect Mysql Database | host = %S", self.__host, exc_info=1)
     #         raise DatabaseException("Failed to Connect Mysql Database")
+
+    def __init__(self):
+        self.__host = DATABASE.HOST
+        self.__user = DATABASE.USERNAME
+        self.__password = DATABASE.PASSWORD
+        self.__db = DATABASE.DATABASE
+        self.__port = DATABASE.PORT
+        self.__charset = DATABASE.CHARSET
+        self.__autocommit = DATABASE.AUTOCOMMIT
+
+    def connect(self):
+        try:
+            return pymysql.connect(host=self.__host, user=self.__user, passwd=self.__password,
+                                   db=self.__db, port=int(self.__port), charset=self.__charset,
+                                   autocommit=self.__autocommit, cursorclass=pymysql.cursors.DictCursor)
+        except Exception as e:
+            logging.error("Failed to Connect Mysql Database | host = %S", self.__host, exc_info=1)
+            raise DatabaseException("Failed to Connect Mysql Database")
 
     def execute_fetch_scalar(self, query, data, raise_no_data_error):
         """Executes provided query and returns single scalar value as output

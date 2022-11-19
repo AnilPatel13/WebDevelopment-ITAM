@@ -28,11 +28,13 @@ def login():
         data_list = [login_email, login_password]
         account_status = base_object.get_login_data(data_list)
         del base_object
-        if len(account_status) == 0 and account_status[0]['status'] not in ('approved', 'reject', 'pending') \
-                and account_status[0]['role'] not in ('view', 'admin'):
+        print(account_status)
+        if len(account_status) == 0:
             flash("Invalid Credentails !", "danger")
             return render_template('login.html')
-        elif len(account_status) == 1:
+        elif len(account_status) == 1 and account_status[0]['status'] in ('approved', 'reject', 'pending') \
+                and account_status[0]['role'] in ('view', 'admin'):
+            print("inside")
             account_id = account_status[0]['employee_id']
             user_name = account_status[0]['first_name']
             secret_key = account_status[0]['otp_encoder']
@@ -46,7 +48,8 @@ def login():
             session['status'] = status
             decoded_qr_code = b64encode(qr_code).decode("utf-8")
             return render_template('authentication.html', secret=secret_key, image=decoded_qr_code)
-    elif request.method == "GET" and 'loggedin' in session and '2fa' in session:
+    elif request.method == "GET" and 'loggedin' in session and '2fa' in session and \
+            (session['role'] in ['view', 'admin'] and session['status'] in ['approved', 'pending', 'reject']):
         return redirect(url_for('home_page'))
     elif request.method == "GET":
         return render_template('login.html')
