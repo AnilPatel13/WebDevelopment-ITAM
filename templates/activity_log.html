@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Request Fulfillment{% endblock %}
+{% block pagecontent %}
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Activity Log</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{{ url_for('home_page') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Activity Log</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-body">
+                <p class="mb-0">
+                    User Ticket Tracking Page
+                </p>
+                </br>
+                <div class="form-floating mb-3">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                        <span class="closebtnalert" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                DataTable for User Activity Log
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                    <tr>
+                        <th>Ticket No</th>
+                        <th>Priority</th>
+                        <th>Additional Comment</th>
+                        <th>Creation Date</th>
+                        <th>Update Date</th>
+                        <th>Status</th>
+<!--                        <th>Support Ticket URL</th>-->
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+
+                        <th>Ticket No</th>
+                        <th>Priority</th>
+                        <th>Additional Comment</th>
+                        <th>Creation Date</th>
+                        <th>Update Date</th>
+                        <th>Status</th>
+<!--                        <th>Support Ticket URL</th>-->
+
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for req_data in requestFulfillmentData %}
+                    <tr>
+                        <td>{{req_data.ticket_no}}</td>
+                        <td>{{req_data.request_priority}}</td>
+                        <td>{{req_data.additional_comments}}</td>
+                        <td>{{req_data.creation_date}}</td>
+                        <td>{{req_data.update_date}}</td>
+                        <td>{{req_data.status}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block javascript %}
+<!--<script src="{{url_for('static',filename='js/datarenderActivityLog.js')}}"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/scripts.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/datatables-simple-demo.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Add Assets{% endblock %}
+{% block pagecontent %}
+<main>
+    <div class="container-fluid px-4">
+        <h4 class="mt-4">Changing QR Code</h4>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{{ url_for('home_page') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('user_setting') }}">User Setting</a></li>
+            <li class="breadcrumb-item active">Change QR Code</li>
+        </ol>
+        </br>
+
+        <div class="card-body">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}" style="text-align:center" role="alert">
+                <strong>{{ message }}</strong>
+                <span class="closebtnalert" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="card-body">
+            <div class="card mb-4">
+                <div class="card-body">
+                    </br>
+                    <div class="container">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <h5>Instructions!</h5>
+                                <ul>
+                                    <li>Download <a
+                                            href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US"
+                                            target="_blank">Google Authenticator Android</a> or
+                                        <a
+                                                href="https://apps.apple.com/us/app/google-authenticator/id388497605"
+                                                target="_blank">Google Authenticator Apple</a> from Mobile.
+                                    </li>
+                                    <li>Rescan the <strong>QR Code</strong> or Setup the Goggle Authenticator App Via
+                                        New <strong>setup key</strong>.
+                                    </li>
+                                    <li>For Setup key Method Provide the required details (name, secret key).</li>
+                                    <li>For Setup key Method Select time-based authentication.</li>
+                                    <li>For Setup key Method Submit the generated key in the form.</li>
+                                </ul>
+                            </div>
+                        </div>
+<!--                        <hr>-->
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <h5>Scan New QR-Code</h5>
+                                <ul>
+                                    <img class="img-thumbnail"
+                                     src="data:;base64,{{ image }}" width="250" height="250"/>
+                                <!--                                        <img class="center-block" style="display: block;margin-left: auto;margin-right: auto;"   src="{{ url_for('static',filename='images/qr_code.png') }}" width="330" height="230"  />-->
+                                </ul>
+                            </div>
+                        </div>
+
+<!--                        <hr>-->
+                        <div class="col-md-6">
+                            <!--                                        <label for="secret">Secret Token</label>-->
+                            <div class="form-floating mb-3">
+                                <h6>Add Account via New Setup key method</h6>
+                                <input type="text" class="form-control" id="secret" name="secret" value="{{ secret }}"
+                                       readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/scripts.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "login_base.html" %}
+{% block title %}2FA{% endblock %}
+{% block pagecontent %}
+<main>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-4">2FA Authentication</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/authentication" method="post">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <h5>Instructions!</h5>
+                                        <ul>
+                                            <li>Download <a
+                                                    href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US"
+                                                    target="_blank">Google Authenticator Android</a> or
+                                                    <a
+                                                    href="https://apps.apple.com/us/app/google-authenticator/id388497605"
+                                                    target="_blank">Google Authenticator Apple</a> from Mobile.
+                                            </li>
+                                            <li>Create a new account with <strong>QR Code</strong> or <strong>setup key</strong> method.</li>
+                                            <li>For Setup key Method Provide the required details (name, secret key).</li>
+                                            <li>For Setup key Method Select time-based authentication.</li>
+                                            <li>For Setup key Method Submit the generated key in the form.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <h5>Scan QR-Code</h5>
+                                        <ul>
+                                        <img class="rounded img-thumbnail"
+                                     src="data:;base64,{{ image }}" width="250" height="250" />
+<!--                                        <img class="center-block" style="display: block;margin-left: auto;margin-right: auto;"   src="data:;base64,{{ image }}" width="280" height="230"  />-->
+<!--                                        <img class="center-block" style="display: block;margin-left: auto;margin-right: auto;"   src="{{ url_for('static',filename='images/qr_code.png') }}" width="330" height="230"  />-->
+                                        </ul>
+                                        </div>
+                                </div>
+
+                                <div class="col-md-6">
+<!--                                        <label for="secret">Secret Token</label>-->
+                                        <div class="form-floating mb-3">
+                                            <h6>Add Account via Setup key method</h6>
+                                            <input type="text" class="form-control" id="secret" name="secret" value="{{ secret }}" readonly>
+                                        </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <h6>Enter OTP</h6>
+                                            <input required="true" class="form-control" id="inputOTP" name="inputOTP" type="text" placeholder="OTP" />
+<!--                                            <label for="inputOTP">Generate OTP</label>-->
+                                        </div>
+                                </div>
+                                <div>
+                                    {% with messages = get_flashed_messages(with_categories=true) %}
+                                    {% if messages %}
+                                    {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}" style="text-align:center" role="alert">
+                                        {{ message }}
+                                        <span class="closebtnalert" onclick="this.parentElement.style.display='none';">&times;</span>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endwith %}
+                                </div>
+<!--                                <div class="msg" style="text-align:center;color:#FF0000">{{ otp_message }}</div>-->
+                            </div>
+                            <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Submit</button></div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

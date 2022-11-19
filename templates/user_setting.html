@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}StockRoom Management{% endblock %}
+{% block pagecontent %}
+<main>
+    <div class="container-fluid px-4">
+            <h1 class="mt-4">Personal Info</h1>
+    <!--        <ol class="breadcrumb mb-4">-->
+    <!--            <li class="breadcrumb-item active">Info about you and your preferences across ITAM services</li>-->
+    <!--        </ol>-->
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="{{ url_for('home_page') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">User Settings</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <p class="mb-0">
+                    <h5>Your profile info in ITAM services</h5>
+                    </br>
+                    Personal info and options to manage it. You can make some of this info, like your contact details,
+                    visible to others so they can reach you easily. You can also see a summary of your profiles.
+                    </p>
+                </div>
+            </div>
+            <div class="mb-0">
+
+                <div class="mb-0">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="text-align:center" role="alert">
+                        <strong>{{ message }}</strong>
+                        <span class="closebtnalert" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p class="mb-0">
+                            <h5>Basic Info</h5>
+                            </br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">Employee Id</div>
+                                    <div class="col-4 text-center">{{ userData.employee_id }}</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-4">First Name</div>
+                                    <div class="col-4 text-center">{{ userData.first_name }}</div>
+                                    <div class="col-4 text-end"><a href="{{ url_for('change_first_name') }}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-4">Middle Name</div>
+                                    <div class="col-4 text-center">{{ userData.middle_name }}</div>
+                                    <div class="col-4 text-end"><a href="{{ url_for('change_middle_name') }}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-4">Last Name</div>
+                                    <div class="col-4 text-center">{{ userData.last_name }}</div>
+                                    <div class="col-4 text-end"><a href="{{ url_for('change_last_name') }}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-4">Birth Date</div>
+                                    <div class="col-4 text-center">{{ userData.birthdate }}</div>
+                                    <div class="col-4 text-end"><a href="{{ url_for('change_birthdate') }}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <p class="mb-0">
+                        <h5>Contact Info</h5>
+                        </br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">Email Address</div>
+                                <div class="col-4 text-center">{{ userData.email_address }}</div>
+                                <div class="col-4 text-end"><a href="{{ url_for('change_email_address') }}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-4">Contact Number</div>
+                                <div class="col-4 text-center">{{ userData.contact_no }}</div>
+                                <div class="col-4 text-end"><a href="{{ url_for('change_contact_number') }}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <p class="mb-0">
+                        <h5>Security Details</h5>
+                        </br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">Change Privilege</div>
+                                <div class="col-6 text-end"><a href="{{ url_for('change_privilege') }}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">Change QR Code</div>
+                                <div type="submit" class="col-6 text-end"><a href="{{ url_for('change_qr') }}"><i class="fa-solid fa-arrows-rotate fa-xl"></i></a></div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">Change Password</div>
+                                <div class="col-6 text-end"><a href="{{ url_for('change_password') }}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/scripts.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/datatables-simple-demo.js')}}"></script>
+{% endblock %}
+

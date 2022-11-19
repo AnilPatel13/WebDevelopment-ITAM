@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Add Assets{% endblock %}
+{% block pagecontent %}
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">User Roles Approval</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{{ url_for('home_page') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Add Assets</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-body">
+                <p class="mb-0">
+                    Role Based Access Control Approval Portal.
+                </p>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-body">
+                <form action="/user_roles" method="post">
+                    <div class="mb-3">
+
+                        <div class="col-md-4">
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}" role="alert">
+                                {{ message }}
+                                <span class="closebtnalert" onclick="this.parentElement.style.display='none';">&times;</span>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="eid" name="eid" type="text"
+                                        placeholder="Select Employee ID"/>
+                                {% for data in empData %}
+                                <option value="{{data.employee_id}}">
+                                    {{data.employee_id}}
+                                </option>
+                                {% endfor %}
+                                </select>
+                                <label for="eid">Select Employee ID</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input required="true" class="form-control" id="rbacrole" name="rbacrole" type="text"
+                                       placeholder="rbac status" readonly/>
+                                <label for="rbacrole">admin</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="rbacstatus" name="rbacstatus" type="text"
+                                        placeholder="Select Role"/>
+                                <option value="approved">approved</option>
+                                <option value="pending">pending</option>
+                                <option value="reject">reject</option>
+                                </select>
+                                <label for="rbacstatus">Select Role</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-block">Done</button>
+                        </div>
+                        <!--                                    <div class="d-grid"><a class="btn btn-primary btn-block" href="{{ url_for('insert_stockroomdata') }}">Add</a></div>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/scripts.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Add Assets{% endblock %}
+{% block pagecontent %}
+<main>
+    <div class="container-fluid px-4">
+        <h4 class="mt-4">Changing Last Name</h4>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{{ url_for('home_page') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('user_setting') }}">User Setting</a></li>
+            <li class="breadcrumb-item active">Change Last Name</li>
+        </ol>
+        </br>
+        <div class="card mb-4">
+            <div class="card-body">
+                <form action="/change_last_name" method="post">
+                    <div class="mb-3">
+
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input required="true" class="form-control" id="lastname" name="lastname" type="text"
+                                       placeholder="Enter New Last Name"/>
+                                <label for="lastname">Enter New Last Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-block">Save</button>
+                        </div>
+                        <!--                                    <div class="d-grid"><a class="btn btn-primary btn-block" href="{{ url_for('insert_stockroomdata') }}">Add</a></div>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/scripts.js')}}"></script>
+{% endblock %}
