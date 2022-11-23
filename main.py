@@ -7,6 +7,8 @@ from module.BaseClass import *
 from helper.Constant import *
 from collections import OrderedDict
 from ordered_set import OrderedSet
+import logging as log
+import google.cloud.logging as logging
 
 app = Flask(__name__)
 
@@ -683,6 +685,9 @@ def requests_fulfillment_process():
         tstatus = request.form.get("tstatus")
 
         if trequest_type == "Asset_Request" and tstatus == "Done":
+            # logging_client = logging.Client()
+            # logging_client.setup_logging()
+            # log.error(f"Inside request: Inside request")
             requestfulfillmentdata = base_object.get_request_fulfillment_by_ticketno([tno])
             asset_id = requestfulfillmentdata[0]['asset_id']
             data_dict = {

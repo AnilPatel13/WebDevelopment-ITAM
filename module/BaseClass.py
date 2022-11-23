@@ -274,7 +274,7 @@ class BaseClass:
 
         query_sql = {"query1": """
 
-        update itam.asset set assigned_to = %s, employee_id = %s, update_date=current_timestamp() where asset_id = %s
+        update itam.Asset set assigned_to = %s, employee_id = %s,asset_state='inuse', asset_state_id = 1 update_date=current_timestamp() where asset_id = %s
         """,
                      "query2": """
         update itam.request_fulfillment set status = %s, update_date=current_timestamp() where ticket_no = %s
